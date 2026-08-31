@@ -371,10 +371,6 @@ This project also demonstrates practical use of Python programming concepts such
 
 ---
 
-## Author
-
-**Kothagundla Sowmya Lakshmi**
-
 ### Project
 
 **Library Management System**

@@ -1,42 +1,42 @@
 from database import issued_books, returned_books
 
+
 def view_history():
 
-    print("\n LIBRARY HISTORY ")
+    print("\nIssued Books")
 
-    print("\nISSUED BOOKS ")
-    
-    if issued_books:
-        for record in issued_books:
-            print("Username:", record["username"])
-            print("Book ID:", record["book_id"])         
-    else:
-        print("No issued book history found.")
-    print("\n RETURNED BOOKS ")
+    for record in issued_books:
 
-    if returned_books:
-        for record in returned_books:
-            print("Username:", record["username"])
-            print("Book ID:", record["book_id"])
-        
-    else:
-        print("No returned book history found.")
+        print("Username:", record["username"])
+        print("Book ID:", record["book_id"])
+
+    print("\nReturned Books")
+
+    for record in returned_books:
+
+        print("Username:", record["username"])
+        print("Book ID:", record["book_id"])
 
 
 def view_my_history(username):
 
-    print("\n MY HISTORY ")
+    print("\nMy History")
+
     found = False
-    print("\n ISSUED BOOKS ")
 
     for record in issued_books:
+
         if record["username"] == username:
-            print("Book ID:", record["book_id"])
+
+            print("Issued Book ID:", record["book_id"])
             found = True
-    print("\n RETURNED BOOKS ")
+
     for record in returned_books:
+
         if record["username"] == username:
-            print("Book ID:", record["book_id"])
+
+            print("Returned Book ID:", record["book_id"])
             found = True
+
     if not found:
-        print("No history found.")
+        print("No history found")

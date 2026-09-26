@@ -1,73 +1,41 @@
 # Library Management System
 
-## Project Overview
-
-The Library Management System is a Python-based console application used to manage library activities such as users, books, categories, book issuing, returning books, fines, searching books, and viewing history.
-
-The system is divided into three main roles:
-
-* **Admin**
-* **Librarian**
-* **Member**
-
-Each role has different permissions and features.
-
----
+A Python and MySQL based Library Management System designed to manage books, categories, users, librarians, members, borrowing, returning, fines, history, and reports.
 
 ## Features
 
-### Admin
+* Admin management
+* User management
+* Book management
+* Category management
+* Librarian management
+* Member management
+* Book issue and return
+* Fine management
+* Library history
+* Reports
+* MySQL database integration
 
-The Admin is responsible for managing the overall library system.
+## Technologies Used
 
-* Add users
-* View users
-* Delete users
-* Manage books
-* Manage book categories
-* View reports
-* View issue and return history
-
-### Librarian
-
-The Librarian manages daily library operations.
-
-* Add and manage books
-* Issue books
-* Return books
-* Manage fines
-* Search books
-* View library history
-
-### Member
-
-The Member can access books and manage their own borrowing activities.
-
-* Search books
-* View available books
-* Borrow books
-* Return books
-* View personal borrowing history
-
----
+* Python
+* MySQL
+* MySQL Connector/Python
+* Git & GitHub
 
 ## Project Structure
 
 ```text
 LibraryManagementSystem/
 │
-├── main.py
-├── login.py
-├── database.py
-│
 ├── admin/
 │   ├── __init__.py
 │   ├── admin_menu.py
-│   ├── user_management.py
 │   ├── book_management.py
 │   ├── category_management.py
+│   ├── history.py
 │   ├── reports.py
-│   └── history.py
+│   └── user_management.py
 │
 ├── librarian/
 │   ├── __init__.py
@@ -79,302 +47,294 @@ LibraryManagementSystem/
 │   ├── search_books.py
 │   └── history.py
 │
-└── member/
-    ├── __init__.py
-    ├── member_menu.py
-    ├── search_books.py
-    ├── view_books.py
-    ├── borrow_book.py
-    ├── return_book.py
-    └── history.py
+├── member/
+│   ├── __init__.py
+│   ├── member_menu.py
+│   ├── search_books.py
+│   ├── view_books.py
+│   ├── borrow_book.py
+│   ├── return_book.py
+│   └── history.py
+│
+├── database.py
+├── LIBRARY MANAGEMENT QUERY'S.sql
+├── README.md
+└── .gitignore
 ```
 
----
+## MySQL Database Setup
 
-## Description of Files
+This project uses **MySQL** as the database.
 
-### Main Files
-
-**`main.py`**
-
-This is the starting point of the application. It runs the library management system and connects the login and role-based menus.
-
-**`login.py`**
-
-Handles user login and checks the user's role before providing access to the appropriate menu.
-
-**`database.py`**
-
-Stores and manages the main library data such as users, books, categories, issued books, returned books, and other records.
-
----
-
-## Admin Modules
-
-### `admin_menu.py`
-
-Displays the Admin menu and allows the Admin to select different operations.
-
-### `user_management.py`
-
-Used to:
-
-* Add users
-* View users
-* Delete users
-
-### `book_management.py`
-
-Used to manage library books.
-
-### `category_management.py`
-
-Used to add, view, update, or manage book categories.
-
-### `reports.py`
-
-Displays library-related reports and information.
-
-### `history.py`
-
-Displays issue and return history for the library.
-
----
-
-## Librarian Modules
-
-### `librarian_menu.py`
-
-Displays the Librarian menu.
-
-### `book_management.py`
-
-Allows the Librarian to manage books.
-
-### `issue_book.py`
-
-Handles issuing books to members.
-
-### `return_book.py`
-
-Handles returning books and updating their availability.
-
-### `fine_management.py`
-
-Manages fines related to overdue or returned books.
-
-### `search_books.py`
-
-Allows the Librarian to search for books.
-
-### `history.py`
-
-Displays book issue and return history.
-
----
-
-## Member Modules
-
-### `member_menu.py`
-
-Displays the Member menu.
-
-### `search_books.py`
-
-Allows members to search for books.
-
-### `view_books.py`
-
-Displays available books.
-
-### `borrow_book.py`
-
-Allows members to borrow available books.
-
-### `return_book.py`
-
-Allows members to return borrowed books.
-
-### `history.py`
-
-Displays the member's borrowing and returning history.
-
----
-
-## Role-Based Access
-
-| Role      | Main Responsibilities                          |
-| --------- | ---------------------------------------------- |
-| Admin     | Users, books, categories, reports, history     |
-| Librarian | Books, issue, return, fines, search, history   |
-| Member    | Search, view, borrow, return, personal history |
-
----
-
-## Application Flow
+The complete database queries are available in:
 
 ```text
-Start Application
-       |
-       v
-    Login
-       |
-       v
- Check Username & Password
-       |
-       v
-    Check Role
-       |
-   ┌───┼───────────┐
-   |   |           |
-   v   v           v
- Admin Librarian  Member
-   |     |          |
-   v     v          v
-Admin  Librarian  Member
-Menu    Menu       Menu
+LIBRARY MANAGEMENT QUERY'S.sql
 ```
 
----
+The SQL file contains the database creation, table creation, relationships, sample data, queries, views, and other database operations required for the project.
 
-## How to Run the Project
+### 1. Install MySQL
 
-### Step 1: Open the Project
+Install MySQL Server and MySQL Workbench on your system.
 
-Open the `LibraryManagementSystem` folder in VS Code or any Python IDE.
+Make sure the MySQL server is running before starting the application.
 
-### Step 2: Check Python Installation
+### 2. Create the Database
 
-Open the terminal and run:
+Open **MySQL Workbench** and run:
+
+```sql
+CREATE DATABASE library_management;
+
+USE library_management;
+```
+
+### 3. Create Tables
+
+The SQL file contains the required tables for the Library Management System.
+
+Main tables include:
+
+```text
+users
+categories
+books
+librarians
+members
+issue_books
+return_books
+fines
+history
+```
+
+The exact table definitions and relationships are available in:
+
+```text
+LIBRARY MANAGEMENT QUERY'S.sql
+```
+
+### 4. Run the SQL File
+
+Open:
+
+```text
+LIBRARY MANAGEMENT QUERY'S.sql
+```
+
+in MySQL Workbench and execute the complete script.
+
+You can also execute individual queries from the file as required.
+
+### 5. Verify the Database
+
+After executing the SQL file, check the database using:
+
+```sql
+SHOW DATABASES;
+
+USE library_management;
+
+SHOW TABLES;
+```
+
+To check table structure:
+
+```sql
+DESC users;
+DESC categories;
+DESC books;
+```
+
+To view records:
+
+```sql
+SELECT * FROM users;
+SELECT * FROM categories;
+SELECT * FROM books;
+```
+
+## Important MySQL Queries
+
+### View All Books
+
+```sql
+SELECT * FROM books;
+```
+
+### View All Categories
+
+```sql
+SELECT * FROM categories;
+```
+
+### Search Books
+
+```sql
+SELECT *
+FROM books
+WHERE title LIKE '%Python%';
+```
+
+### View Available Books
+
+```sql
+SELECT *
+FROM books
+WHERE available_quantity > 0;
+```
+
+### Count Books
+
+```sql
+SELECT COUNT(*) AS total_books
+FROM books;
+```
+
+### Books by Category
+
+```sql
+SELECT c.category_name, COUNT(b.book_id) AS total_books
+FROM categories c
+LEFT JOIN books b
+ON c.category_id = b.category_id
+GROUP BY c.category_id, c.category_name;
+```
+
+### Issue Book Details
+
+```sql
+SELECT *
+FROM issue_books;
+```
+
+### Return Book Details
+
+```sql
+SELECT *
+FROM return_books;
+```
+
+### View Fine Details
+
+```sql
+SELECT *
+FROM fines;
+```
+
+### View Library History
+
+```sql
+SELECT *
+FROM history;
+```
+
+## Database Connection
+
+The Python application connects to MySQL through `database.py`.
+
+Example:
+
+```python
+import mysql.connector
+
+def get_connection():
+    return mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="your_password",
+        database="library_management"
+    )
+```
+
+Replace:
+
+```text
+your_password
+```
+
+with your MySQL password.
+
+Do not upload your actual MySQL password to GitHub.
+
+## Install Python Dependency
+
+Install MySQL Connector/Python using:
 
 ```bash
-python --version
+pip install mysql-connector-python
 ```
 
-If Python is installed, its version will be displayed.
+## Run the Project
 
-### Step 3: Run the Application
-
-From the project folder, run:
+After configuring the MySQL database, run the main Python file:
 
 ```bash
 python main.py
 ```
 
-The application will start and display the login screen.
+Follow the menu options to access the Admin, Librarian, and Member modules.
 
----
+## Admin Module
 
-## Example
+The Admin module provides functionality for:
 
-```text
-===== LIBRARY MANAGEMENT SYSTEM =====
+* Managing users
+* Managing books
+* Managing categories
+* Viewing history
+* Generating reports
 
-1. Login
-2. Exit
+## Librarian Module
 
-Enter your choice:
+The Librarian module provides functionality for:
+
+* Managing books
+* Issuing books
+* Returning books
+* Managing fines
+* Searching books
+* Viewing history
+
+## Member Module
+
+The Member module provides functionality for:
+
+* Searching books
+* Viewing available books
+* Borrowing books
+* Returning books
+* Viewing borrowing history
+
+## GitHub
+
+The project can be maintained and version-controlled using Git and GitHub.
+
+Basic commands:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin YOUR_GITHUB_REPOSITORY_URL
+git push -u origin main
 ```
 
-After successful login, the system identifies the user's role and displays the corresponding menu.
+## Security
 
-Example:
-
-```text
-===== ADMIN MENU =====
-
-1. User Management
-2. Book Management
-3. Category Management
-4. Reports
-5. History
-6. Logout
-```
-
----
-
-## Technologies Used
-
-* **Python**
-* Python Modules
-* Functions
-* Classes
-* Lists
-* Dictionaries
-* Conditional Statements
-* Loops
-* Exception Handling
-* Modular Programming
-
----
-
-## Key Concepts Used
-
-### Modular Programming
-
-The project is divided into multiple Python files based on functionality. This makes the project easier to understand, maintain, and debug.
-
-### Role-Based Access
-
-Different users get different permissions based on their role.
-
-### Data Management
-
-The system maintains information about users, books, issued books, returned books, categories, and fines.
-
-### Functions
-
-Functions are used to perform individual operations such as adding users, searching books, issuing books, and returning books.
-
-### Classes
-
-Classes such as `User` or `Book` can be used to represent library objects and their properties.
-
----
-
-## Advantages
-
-* Easy to use
-* Simple console-based interface
-* Role-based access
-* Organized project structure
-* Easy to maintain and modify
-* Reduces manual library management work
-* Provides book issue and return tracking
-* Maintains borrowing history
-
----
+* Do not store MySQL passwords in source code when sharing the project publicly.
+* Do not upload `.env` files containing passwords.
+* Add sensitive files to `.gitignore`.
+* Use parameterized SQL queries when accepting user input.
 
 ## Future Enhancements
 
-The project can be improved by adding:
-
-* MySQL or SQLite database
-* Graphical User Interface
-* Password encryption
+* Web-based interface using Flask or Django
 * Email notifications
-* Automatic fine calculation
-* Book reservation
-* Due-date reminders
-* Advanced search and filtering
-* Admin dashboard
-* Member registration
+* Online book reservation
+* Advanced search
+* Dashboard and analytics
+* Role-based authentication
+* PDF report generation
 * Book availability notifications
-
----
-
-## Conclusion
-
-The Library Management System is a modular Python project that helps manage common library operations. By separating Admin, Librarian, and Member functionalities into different modules, the application is easier to manage and understand.
-
-This project also demonstrates practical use of Python programming concepts such as functions, modules, classes, lists, dictionaries, conditional statements, loops, and role-based access.
-
----
-
-### Project
-
-**Library Management System**
-
-### Language
-
-**Python**

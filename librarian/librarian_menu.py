@@ -2,7 +2,7 @@ from librarian.book_management import add_book, view_books, update_book
 from librarian.issue_book import issue_book
 from librarian.return_book import return_book
 from librarian.fine_management import add_fine, view_fines
-from librarian.search_books import search_book
+from librarian.search_books import search_books
 from librarian.history import view_history
 
 
@@ -58,7 +58,7 @@ def librarian_menu():
                 view_fines()
 
         elif choice == "5":
-            search_book()
+            search_books()
 
         elif choice == "6":
             view_history()

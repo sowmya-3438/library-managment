@@ -1,30 +1,55 @@
-from database import books, issued_books, returned_books
+from database import get_connection
 
 
-def return_book(username=None):
+def return_book():
 
-    if username is None:
-        username = input("Enter username: ")
+    print("\nRETURN BOOK ")
 
-    book_id = int(input("Enter book ID: "))
+    book_id = input("Enter book ID: ")
+    user_id = input("Enter user ID: ")
 
-    for record in issued_books:
+    connection = get_connection()
 
-        if record["username"] == username and record["book_id"] == book_id:
+    if connection is None:
+        return
 
-            issued_books.remove(record)
+    cursor = connection.cursor()
 
-            for book in books:
+    try:
+        # Check whether the book was issued
+        cursor.execute("""
+            SELECT *
+            FROM issued_books
+            WHERE book_id = %s AND user_id = %s
+        """, (book_id, user_id))
 
-                if book["id"] == book_id:
-                    book["available"] += 1
+        issued = cursor.fetchone()
 
-            returned_books.append({
-                "username": username,
-                "book_id": book_id
-            })
-
-            print("Book returned successfully")
+        if issued is None:
+            print("No issued book record found.")
             return
 
-    print("Book issue record not found")
+        # Add record to returned_books
+        cursor.execute("""
+            INSERT INTO returned_books
+            (book_id, user_id)
+            VALUES (%s, %s)
+        """, (book_id, user_id))
+
+        # Remove the book from issued_books
+        cursor.execute("""
+            DELETE FROM issued_books
+            WHERE book_id = %s AND user_id = %s
+        """, (book_id, user_id))
+
+        connection.commit()
+
+        print("Book returned successfully.")
+
+    except Exception as e:
+        connection.rollback()
+        print("Error returning book:", e)
+
+    finally:
+        cursor.close()
+        connection.close()

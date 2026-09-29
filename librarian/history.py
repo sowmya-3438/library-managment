@@ -1,42 +1,100 @@
-from database import issued_books, returned_books
+from database import get_connection
 
 
 def view_history():
 
-    print("\nIssued Books")
+    print("\nLIBRARY HISTORY ")
 
-    for record in issued_books:
+    connection = get_connection()
 
-        print("Username:", record["username"])
-        print("Book ID:", record["book_id"])
+    if connection is None:
+        return
 
-    print("\nReturned Books")
+    cursor = connection.cursor()
 
-    for record in returned_books:
+    try:
 
-        print("Username:", record["username"])
-        print("Book ID:", record["book_id"])
+    
+        # ISSUED BOOKS
+        
+        print("\n ISSUED BOOKS ")
 
+        query = """
+            SELECT
+                bi.issue_id,
+                u.full_name,
+                b.book_name,
+                bi.issue_date,
+                bi.due_date,
+                bi.issue_status
+            FROM book_issues bi
+            JOIN users u
+                ON bi.user_id = u.user_id
+            JOIN books b
+                ON bi.book_id = b.book_id
+            ORDER BY bi.issue_id
+        """
 
-def view_my_history(username):
+        cursor.execute(query)
 
-    print("\nMy History")
+        issued_books = cursor.fetchall()
 
-    found = False
+        if issued_books:
+            for row in issued_books:
+                print(
+                    "Issue ID:", row[0],
+                    "| User:", row[1],
+                    "| Book:", row[2],
+                    "| Issue Date:", row[3],
+                    "| Due Date:", row[4],
+                    "| Status:", row[5]
+                )
+        else:
+            print("No issued books found.")
 
-    for record in issued_books:
+        
+        # RETURNED BOOKS
+        
+        print("\nRETURNED BOOKS ")
 
-        if record["username"] == username:
+        query = """
+            SELECT
+                br.return_id,
+                u.full_name,
+                b.book_name,
+                br.return_date,
+                br.return_condition,
+                br.remarks
+            FROM book_returns br
+            JOIN book_issues bi
+                ON br.issue_id = bi.issue_id
+            JOIN users u
+                ON bi.user_id = u.user_id
+            JOIN books b
+                ON bi.book_id = b.book_id
+            ORDER BY br.return_id
+        """
 
-            print("Issued Book ID:", record["book_id"])
-            found = True
+        cursor.execute(query)
 
-    for record in returned_books:
+        returned_books = cursor.fetchall()
 
-        if record["username"] == username:
+        if returned_books:
+            for row in returned_books:
+                print(
+                    "Return ID:", row[0],
+                    "| User:", row[1],
+                    "| Book:", row[2],
+                    "| Return Date:", row[3],
+                    "| Condition:", row[4],
+                    "| Remarks:", row[5]
+                )
+        else:
+            print("No returned books found.")
 
-            print("Returned Book ID:", record["book_id"])
-            found = True
+    except Exception as e:
+        print("Error displaying history:", e)
 
-    if not found:
-        print("No history found")
+    finally:
+        cursor.close()
+        connection.close()

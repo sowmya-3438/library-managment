@@ -1,58 +1,17 @@
-users = [
-    {
-        "id": 1,
-        "name": "Admin",
-        "username": "admin",
-        "password": "admin123",
-        "role": "admin"
-    },
-    {
-        "id": 2,
-        "name": "Librarian",
-        "username": "librarian",
-        "password": "lib123",
-        "role": "librarian"
-    },
-    {
-        "id": 3,
-        "name": "Student",
-        "username": "student",
-        "password": "stu123",
-        "role": "member"
-    }
-]
+import mysql.connector
 
 
-books = [
-    {
-        "id": 1,
-        "name": "Python Programming",
-        "author": "Guido van Rossum",
-        "category": "Programming",
-        "quantity": 5,
-        "available": 5
-    },
-    {
-        "id": 2,
-        "name": "Java Programming",
-        "author": "James Gosling",
-        "category": "Programming",
-        "quantity": 3,
-        "available": 3
-    }
-]
+def get_connection():
+    try:
+        connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="root",
+            database="library_management"
+        )
 
+        return connection
 
-categories = [
-    "Programming",
-    "Database",
-    "Science",
-    "Fiction"
-]
-
-
-issued_books = []
-
-returned_books = []
-
-fines = []
+    except mysql.connector.Error as e:
+        print("Database connection error:", e)
+        return None

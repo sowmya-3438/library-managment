@@ -1,19 +1,38 @@
-from database import books
+from database import get_connection
 
 
 def view_books():
 
     print("\n AVAILABLE BOOKS ")
 
-    if not books:
-        print("No books available")
+    connection = get_connection()
+
+    if connection is None:
         return
 
-    for book in books:
+    cursor = connection.cursor()
 
-        
-        print("Book ID   :", book["id"])
-        print("Book Name :", book["name"])
-        print("Author    :", book["author"])
-        print("Category  :", book["category"])
-        print("Available :", book["available"])
+    try:
+        query = """
+            SELECT *
+            FROM books
+        """
+
+        cursor.execute(query)
+
+        books = cursor.fetchall()
+
+        if not books:
+            print("No books available.")
+        else:
+            print("\n BOOK LIST ")
+
+            for book in books:
+                print(book)
+
+    except Exception as e:
+        print("Error viewing books:", e)
+
+    finally:
+        cursor.close()
+        connection.close()

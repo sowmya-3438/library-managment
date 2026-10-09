@@ -21,7 +21,7 @@ Available operations depend on the signed-in user's role and the menu modules in
 
 ## Project layout
 
-```text
+ 
 library managment system/
 ├── main.py                 # Application entry point and role routing
 ├── login.py                # Authenticates a user against MySQL
@@ -30,7 +30,7 @@ library managment system/
 ├── admin/                  # Admin menu and user, book, category, report, history modules
 ├── librarian/              # Librarian menu and book, issue, return, fine, search, history modules
 └── member/                 # Member menu and borrow, return, search, view, history modules
-```
+
 
 The SQL setup and example queries are in the separate file `LIBRARY MANAGEMENT QUERY'S.sql`.
 
@@ -92,3 +92,6 @@ The SQL setup defines tables for users, categories, books, book issues, returns,
 - Run the SQL setup before starting the Python application; `database.py` connects to an existing database and does not create tables.
 - The SQL script contains setup, sample data, and practice queries. Review it before running against a database with data you need to keep.
 - Login currently compares the submitted password directly with the `password` column. Password hashing and secure secret configuration are not implemented in the supplied code.
+## ER Diagram
+
+[View Library Management System ER Diagram](diagrms/er_diagram.png)
